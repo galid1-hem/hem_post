@@ -32,15 +32,9 @@ allprojects {
 subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "base")
-    apply(plugin = "kotlin-jpa")
     apply(plugin = "kotlin-spring")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "kotlin-kapt")
-    apply(plugin = "kotlin-allopen")
-    apply(plugin = "com.google.cloud.tools.jib")
-    apply(plugin = "com.google.protobuf")
-    apply(plugin = "jacoco")
 
     dependencies {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
