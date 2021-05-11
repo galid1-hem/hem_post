@@ -1,11 +1,11 @@
-package com.galid.hem.post.read
+package com.galid.hem.post.command
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class ReadApplication
+class CommandApplication
 
 fun main(args: Array<String>) {
-	runApplication<ReadApplication>(*args)
+	runApplication<CommandApplication>(*args)
 }

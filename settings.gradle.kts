@@ -8,4 +8,5 @@ buildscript {
 bootstrapRefreshVersions()
 
 rootProject.name = "post"
-include("read")
+include("query")
+include("command")
