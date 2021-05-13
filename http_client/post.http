@@ -1,0 +1,24 @@
+### create post, biz
+POST {{host}}/api/v1/posts
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "regionId": 1,
+  "contents": [
+    {
+      "value": "ASD",
+      "type": "TEXT"
+    }
+  ],
+  "mediaIds": [
+    {
+      "id": "1",
+      "type":"PHOTO"
+    }
+  ]
+}
+
+
+### get post
+GET {{host}}/api/v1/posts/{{postId}}
