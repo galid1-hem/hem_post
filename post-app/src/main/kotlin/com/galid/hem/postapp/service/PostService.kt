@@ -64,6 +64,7 @@ class PostService(
         return PostDocument(
             userId = userId,
             regionId = dto.regionId,
+            title = dto.title,
             contents = contents,
             mediaIds = mediaIds,
         )
@@ -83,6 +84,7 @@ class PostService(
             postId = postDocument.id.toString(),
             regionId = postDocument.regionId,
             userId = userId?: 1,
+            title = postDocument.title,
             contents = contents,
             mediaIds = mediaIds,
             visible = postDocument.visible,

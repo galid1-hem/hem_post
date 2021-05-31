@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 class PostDto {
     data class Request (
         val regionId: Long,
+        val title: String,
         val contents: List<DecoratorDto>? = null,
         val mediaIds: List<MediaIdDto>? = null
     )
@@ -15,6 +16,7 @@ class PostDto {
         val postId: String,
         val userId: Long,
         val regionId: Long,
+        val title: String,
         val contents: List<DecoratorDto>? = null,
         val mediaIds: List<MediaIdDto>? = null,
         val visible: Boolean,

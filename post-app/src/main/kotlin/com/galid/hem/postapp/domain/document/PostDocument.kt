@@ -12,6 +12,7 @@ class PostDocument(
     var id: ObjectId? = null,
     var userId: Long? = null,
     var regionId: Long,
+    var title: String,
     var contents: List<Decorator>? = null,
     var mediaIds: List<MediaId>? = null,
     var visible: Boolean = true,
