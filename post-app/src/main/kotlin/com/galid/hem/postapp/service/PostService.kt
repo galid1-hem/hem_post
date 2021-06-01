@@ -4,18 +4,46 @@ import com.galid.hem.postapp.common.extension.toObjectId
 import com.galid.hem.postapp.domain.document.PostDocument
 import com.galid.hem.postapp.domain.model.Decorator
 import com.galid.hem.postapp.domain.model.MediaId
+import com.galid.hem.postapp.domain.repository.ActorPostRepository
 import com.galid.hem.postapp.domain.repository.PostRepository
 import com.galid.hem.postapp.service.dto.PostDto
+import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 
 @Service
 class PostService(
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val actorPostRepository: ActorPostRepository
 ) {
     fun createPost(
         request: PostDto.Request
     ) {
         postRepository.save(fromDto(request))
+    }
+
+    // 성능상 이슈가 있을것 같음 고민해 봐야 함
+    fun getPosts(
+        lastPostId: String?,
+        size: Int
+    ): List<PostDto.Response> {
+        val lastPostId = lastPostId?.let { ObjectId(it) }
+
+        return postRepository.findAllRecently(lastPostId, size)
+            .map { fromDocument(it) }
+    }
+
+    fun getPostsByActorId(
+        actorId: String,
+        lastPostId: String?,
+        size: Int
+    ): List<PostDto.Response> {
+        // actorId로 postId들을 받아온다
+        val lastPostId = lastPostId?.let { ObjectId(it) }
+        val postIds = actorPostRepository.findAllByActorId(actorId, lastPostId, size)
+            .map { it.postId }
+
+        return postRepository.findAllByIdIn(postIds)
+            .map { fromDocument(it) }
     }
 
     fun getPost(
@@ -83,7 +111,7 @@ class PostService(
         return PostDto.Response(
             postId = postDocument.id.toString(),
             regionId = postDocument.regionId,
-            userId = userId?: 1,
+            userId = userId ?: 1,
             title = postDocument.title,
             contents = contents,
             mediaIds = mediaIds,

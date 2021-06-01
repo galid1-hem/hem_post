@@ -5,6 +5,7 @@ Content-Type: application/json
 {
   "userId": 1,
   "regionId": 1,
+  "title": "AAA",
   "contents": [
     {
       "value": "ASD",
