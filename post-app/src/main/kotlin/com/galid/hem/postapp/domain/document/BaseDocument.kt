@@ -6,7 +6,8 @@ import java.time.LocalDateTime
 
 open class BaseDocument(
     @CreatedDate
-    var createdAt: LocalDateTime?,
+    var createdAt: LocalDateTime? = null,
     @LastModifiedDate
-    var updatedAt: LocalDateTime?) {
+    var updatedAt: LocalDateTime? = null
+) {
 }

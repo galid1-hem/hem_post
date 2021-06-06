@@ -11,6 +11,16 @@ import org.springframework.data.mongodb.core.query.Query
 class PostRepositoryImpl(
     private val mongoTemplate: MongoTemplate
 ): PostCustomRepository {
+    override fun findCachedByIdOrdNull(id: ObjectId): PostDocument? {
+        val criteria = Criteria("id")
+            .`is`(id)
+
+        val query = Query(criteria)
+
+        return mongoTemplate.findOne(query, PostDocument::class.java)
+    }
+
+
     override fun findAllByIdIn(ids: List<ObjectId>): List<PostDocument> {
         val query = Query(Criteria("id").`in`(ids))
 
@@ -26,7 +36,7 @@ class PostRepositoryImpl(
         }
 
         val query = Query(criteria)
-            .with(PageRequest.of(0, size, Sort.Direction.DESC))
+            .with(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "id")))
 
         return mongoTemplate.find(query, PostDocument::class.java)
     }

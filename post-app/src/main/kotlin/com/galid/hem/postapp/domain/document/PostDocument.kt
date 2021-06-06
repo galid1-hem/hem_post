@@ -9,8 +9,9 @@ import java.time.LocalDateTime
 
 @Document("post")
 class PostDocument(
+    @Id
     var id: ObjectId? = null,
-    var userId: Long? = null,
+    var actorId: Long? = null,
     var regionId: Long,
     var title: String,
     var contents: List<Decorator>? = null,

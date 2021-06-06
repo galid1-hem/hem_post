@@ -1,0 +1,4 @@
+### create Like
+POST {{host}}/api/v1/posts/{{post_id}}/likes
+
+{}

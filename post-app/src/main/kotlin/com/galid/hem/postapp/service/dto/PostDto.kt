@@ -19,6 +19,8 @@ class PostDto {
         val title: String,
         val contents: List<DecoratorDto>? = null,
         val mediaIds: List<MediaIdDto>? = null,
+        val postCounter: PostCounterDto.Response? = null,
+        val viewerLike: LikeDto.Response? = null,
         val visible: Boolean,
         val deletedAt: LocalDateTime? = null
     )

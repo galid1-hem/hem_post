@@ -23,3 +23,7 @@ Content-Type: application/json
 
 ### get post
 GET {{host}}/api/v1/posts/{{postId}}
+
+### get Recently Posts
+GET {{host}}/api/v1/posts
+
