@@ -1,0 +1,29 @@
+### create comment
+POST {{host}}/api/v1/posts/{{post_id}}/comments
+Content-Type: application/json
+
+{
+  "contents": [
+    {
+      "value": "5 댓글",
+      "type": "TEXT"
+    }
+  ]
+}
+
+### create sub comment
+POST {{host}}/api/v1/posts/{{post_id}}/comments
+Content-Type: application/json
+
+{
+  "parentCommentId": "60bdc7bc1498f2418bdb5ce0",
+  "contents": [
+    {
+      "value": "서브 댓글",
+      "type": "TEXT"
+    }
+  ]
+}
+
+### get comments
+GET {{host}}/api/v1/posts/{{post_id}}/comments?size=3&lastCommentId=60bdc7e01498f2418bdb5ce3

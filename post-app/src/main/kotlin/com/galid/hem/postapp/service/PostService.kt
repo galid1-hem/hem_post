@@ -1,20 +1,18 @@
 package com.galid.hem.postapp.service
 
 import com.galid.hem.postapp.common.const.DEFAULT_FETCH_POST_SIZE
+import com.galid.hem.postapp.common.extension.fromDto
+import com.galid.hem.postapp.common.extension.toDto
 import com.galid.hem.postapp.common.extension.toObjectId
 import com.galid.hem.postapp.domain.document.ActorPostDocument
-import com.galid.hem.postapp.domain.document.LikeDocument
 import com.galid.hem.postapp.domain.document.PostCounterDocument
 import com.galid.hem.postapp.domain.document.PostDocument
 import com.galid.hem.postapp.domain.model.Decorator
 import com.galid.hem.postapp.domain.model.MediaId
 import com.galid.hem.postapp.domain.repository.ActorPostRepository
-import com.galid.hem.postapp.domain.repository.LikeRepository
 import com.galid.hem.postapp.domain.repository.PostCounterRepository
 import com.galid.hem.postapp.domain.repository.PostRepository
-import com.galid.hem.postapp.service.dto.LikeDto
-import com.galid.hem.postapp.service.dto.PostCounterDto
-import com.galid.hem.postapp.service.dto.PostDto
+import com.galid.hem.postapp.service.dto.*
 import org.bson.types.ObjectId
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -117,17 +115,12 @@ class PostService(
         dto: PostDto.Request,
         userId: Long? = null,
     ): PostDocument {
-        val contents = dto.contents
-            ?.map { Decorator(it.value, it.type) }
-        val mediaIds = dto.mediaIds
-            ?.map { MediaId(it.id, it.type) }
-
         return PostDocument(
             actorId = userId,
             regionId = dto.regionId,
             title = dto.title,
-            contents = contents,
-            mediaIds = mediaIds,
+            contents = dto.contents?.map { it.fromDto() },
+            mediaIds = dto.mediaIds?.map { it.fromDto() },
         )
     }
 
@@ -194,20 +187,16 @@ class PostService(
         postCounter: PostCounterDto.Response?,
         viewerLike: LikeDto.Response?,
     ): PostDto.Response {
-        val contents = postDocument.contents
-            ?.map { PostDto.DecoratorDto(it.value, it.type) }
-
-        val mediaIds = postDocument.mediaIds
-            ?.map { PostDto.MediaIdDto(it.id, it.type) }
-
         return PostDto.Response(
             postId = postDocument.id.toString(),
             regionId = postDocument.regionId,
             userId = actorId,
             title = postDocument.title,
-            contents = contents,
-            mediaIds = mediaIds,
+            contents = postDocument.contents?.map { it.toDto() },
+            mediaIds = postDocument.mediaIds?.map { it.toDto() },
             visible = postDocument.visible,
+            createdAt = postDocument.createdAt!!,
+            updatedAt = postDocument.updatedAt!!,
             deletedAt = postDocument.deletedAt,
             postCounter = postCounter,
             viewerLike = viewerLike

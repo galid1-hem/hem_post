@@ -14,4 +14,4 @@ class PostCounterDocument(
     var commentCount: Long,
     var viewCount: Long,
     var bookmarkCount: Long,
-): BaseDocument()
+)

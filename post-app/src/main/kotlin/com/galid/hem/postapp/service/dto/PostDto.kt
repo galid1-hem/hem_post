@@ -1,7 +1,5 @@
 package com.galid.hem.postapp.service.dto
 
-import com.galid.hem.postapp.domain.model.Decorator
-import com.galid.hem.postapp.domain.model.MediaId
 import java.time.LocalDateTime
 
 class PostDto {
@@ -22,16 +20,8 @@ class PostDto {
         val postCounter: PostCounterDto.Response? = null,
         val viewerLike: LikeDto.Response? = null,
         val visible: Boolean,
+        val createdAt: LocalDateTime,
+        val updatedAt: LocalDateTime,
         val deletedAt: LocalDateTime? = null
-    )
-
-    data class DecoratorDto(
-        val value: String,
-        val type: Decorator.DecoratorType
-    )
-
-    data class MediaIdDto(
-        val id: String,
-        val type: MediaId.MediaType
     )
 }

@@ -1,5 +1,6 @@
 package com.galid.hem.postapp.service
 
+import com.galid.hem.postapp.common.extension.makeActor
 import com.galid.hem.postapp.common.extension.toObjectId
 import com.galid.hem.postapp.domain.document.LikeDocument
 import com.galid.hem.postapp.domain.model.Actor
@@ -76,16 +77,10 @@ class LikeService(
         likeDocument: LikeDocument,
         actorId: Long
     ): LikeDto.Response{
-        val actor = if (actorId == likeDocument.actorId) {
-            Actor(actorId = actorId, relationType = Actor.RelationType.ME)
-        } else {
-            Actor(actorId = actorId, relationType = Actor.RelationType.OTHER)
-        }
-
         return LikeDto.Response(
             likeId = likeDocument.id.toString(),
             postId = likeDocument.activityId.toString(),
-            actor = actor
+            actor = makeActor(actorId, likeDocument.actorId)
         )
     }
 }
