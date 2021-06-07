@@ -10,7 +10,7 @@ class LikeCustomRepositoryImpl(
     private val mongoTemplate: MongoTemplate
 ): LikeCustomRepository {
     override fun findByPostIdAndActorId(postId: ObjectId, actorId: Long): LikeDocument? {
-        val criteria = Criteria("post_id").`is`(postId)
+        val criteria = Criteria("activity_id").`is`(postId)
             .and("actor_id").`is`(actorId)
 
         val query = Query(criteria)
@@ -20,7 +20,7 @@ class LikeCustomRepositoryImpl(
     }
 
     override fun findAllByPostIdsAndActorId(postIds: List<ObjectId>, actorId: Long): List<LikeDocument> {
-        val criteria = Criteria("post_id").`in`(postIds)
+        val criteria = Criteria("activity_id").`in`(postIds)
             .and("actor_id").`is`(actorId)
 
         val query = Query(criteria)

@@ -13,12 +13,13 @@ class LikeController(
     fun createLike(
         @PathVariable("post_id") postId: String
     ): Response<Any> {
-        likeService.createLike(
-            activityId = postId,
-            actorId = 1,
-            activityType = LikeDocument.ActivityType.POST
+        return Response(
+            data = likeService.createLike(
+                activityId = postId,
+                actorId = 1,
+                activityType = LikeDocument.ActivityType.POST
+            )
         )
-        return Response()
     }
 
     @DeleteMapping("/{like_id}")

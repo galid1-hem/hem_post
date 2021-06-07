@@ -44,7 +44,7 @@ class PostCounterCustomRepositoryImpl(
     }
 
     private fun doInc(postId: ObjectId, targetToInc: String, numberToInc: Int) {
-        val query = Query(Criteria("post_id").`is`(postId))
+        val query = Query(Criteria("_id").`is`(postId))
 
         val update = Update()
             .inc(targetToInc, numberToInc)

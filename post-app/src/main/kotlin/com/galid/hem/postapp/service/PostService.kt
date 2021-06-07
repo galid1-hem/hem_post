@@ -159,7 +159,7 @@ class PostService(
                 postDocument = it,
                 actorId = actorId,
                 postCounter = postCounterMap[it.id],
-                viewerLike = viewerLikeMap[it.id]
+                viewerLike = viewerLikeMap[it.id.toString()]
             )
         }
     }

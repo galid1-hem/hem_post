@@ -22,15 +22,19 @@ class LikeService(
         activityId: String,
         activityType: LikeDocument.ActivityType,
         actorId: Long,
-    ) {
+    ): LikeDto.Response {
         val activityId = activityId.toObjectId()
         val postDocument = postRepository.findCachedByIdOrdNull(activityId)
             ?: RuntimeException("Post($activityId)가 존재하지 않습니다.")
 
-        likeRepository.findByPostIdAndActorId(activityId, actorId)
+        return likeRepository.findByPostIdAndActorId(activityId, actorId)
+            ?.let {
+                return toResponse(likeDocument = it, actorId = actorId)
+            }
             ?:run {
-                likeRepository.save(LikeDocument(actorId = actorId, activityId = activityId, type = activityType))
+                val createdLike =likeRepository.save(LikeDocument(actorId = actorId, activityId = activityId, type = activityType))
                 postCounterRepository.increaseLikeCount(activityId)
+                return toResponse(likeDocument = createdLike, actorId = actorId)
             }
     }
 
