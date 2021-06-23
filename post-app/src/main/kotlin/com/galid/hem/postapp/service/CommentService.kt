@@ -43,6 +43,7 @@ class CommentService(
     fun getComments(
         postId: String,
         actorId: Long,
+        parentCommentId: String?,
         lastCommentId: String?,
         size: Int?,
     ): List<CommentDto.Response> {
@@ -50,6 +51,7 @@ class CommentService(
 
         val comments = commentRepository.findAllBy(
             postId = postId,
+            parentCommentId = parentCommentId?.toObjectId(),
             lastCommentId = lastCommentId?.toObjectId(),
             size = size?: DEFAULT_FETCH_COMMENT_SIZE,
             sortDirection = DEFAULT_COMMENT_SORT_DIRECTION,

@@ -20,9 +20,10 @@ class CommentController(
         )
     }
 
-    @GetMapping
+    @GetMapping(value = ["", "/{commentId}"])
     fun getComments(
         @PathVariable("postId") postId: String,
+        @PathVariable(value = "commentId", required = false) parentCommentId: String?,
         @RequestParam("lastCommentId") lastCommentId: String?,
         @RequestParam("size") size: Int?
         // actorId
@@ -30,6 +31,7 @@ class CommentController(
         return Response(
             data = commentService.getComments(
                 postId = postId,
+                parentCommentId = parentCommentId,
                 actorId = 1,
                 lastCommentId = lastCommentId,
                 size = size
