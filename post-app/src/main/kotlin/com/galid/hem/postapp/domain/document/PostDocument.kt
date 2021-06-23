@@ -31,4 +31,6 @@ class PostDocument(
         this.deletedAt = null
         this.visible = true
     }
+
+    val deleted: Boolean get() = deletedAt != null
 }

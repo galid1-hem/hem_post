@@ -27,7 +27,7 @@ class PostService(
     fun createPost(
         request: PostDto.Request,
         actorId: Long
-    ) {
+    ): PostDto.Response {
         val savedPostDocument = postRepository.save(fromDto(request))
 
         actorPostRepository.save(
@@ -36,6 +36,11 @@ class PostService(
 
         postCounterRepository.save(
             PostCounterDocument(savedPostDocument.id, 0, 0, 0, 0)
+        )
+
+        return aggregatePostWithOtherResponse(
+            post = savedPostDocument,
+            actorId = actorId
         )
     }
 
@@ -52,6 +57,7 @@ class PostService(
             lastPostId = lastPostId,
             size = size ?: DEFAULT_FETCH_POST_SIZE
         )
+            .filterNot { post -> post.deleted }
 
         return aggregatePostListWithOtherResponse(foundPostList, actorId)
     }
@@ -94,6 +100,7 @@ class PostService(
             .orElseThrow { RuntimeException("Resource Not Exist!") }
 
         val willDocument = fromDto(dto = request)
+        existDocument.title = willDocument.title
         existDocument.mediaIds = willDocument.mediaIds
         existDocument.contents = willDocument.contents
 
