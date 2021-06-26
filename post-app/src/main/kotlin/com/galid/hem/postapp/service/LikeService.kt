@@ -4,6 +4,7 @@ import com.galid.hem.postapp.common.extension.makeActor
 import com.galid.hem.postapp.common.extension.toObjectId
 import com.galid.hem.postapp.domain.document.LikeDocument
 import com.galid.hem.postapp.domain.model.Actor
+import com.galid.hem.postapp.domain.repository.CommentRepository
 import com.galid.hem.postapp.domain.repository.LikeRepository
 import com.galid.hem.postapp.domain.repository.PostCounterRepository
 import com.galid.hem.postapp.domain.repository.PostRepository
@@ -15,6 +16,7 @@ import java.lang.RuntimeException
 @Service
 class LikeService(
     private val postRepository: PostRepository,
+    private val commentRepository: CommentRepository,
     private val likeRepository: LikeRepository,
     private val postCounterRepository: PostCounterRepository
 ) {
@@ -28,12 +30,12 @@ class LikeService(
         val postDocument = postRepository.findCachedByIdOrdNull(activityId)
             ?: RuntimeException("Post($activityId)가 존재하지 않습니다.")
 
-        return likeRepository.findByPostIdAndActorId(activityId, actorId)
+        return likeRepository.findByActivityIdAndActorId(activityId, actorId)
             ?.let {
                 return toResponse(likeDocument = it, actorId = actorId)
             }
             ?:run {
-                val createdLike =likeRepository.save(LikeDocument(actorId = actorId, activityId = activityId, type = activityType))
+                val createdLike = likeRepository.save(LikeDocument(actorId = actorId, activityId = activityId, type = activityType))
                 postCounterRepository.increaseLikeCount(activityId)
                 return toResponse(likeDocument = createdLike, actorId = actorId)
             }

@@ -126,6 +126,7 @@ class PostService(
             actorId = userId,
             regionId = dto.regionId,
             title = dto.title,
+            thumbnailUrl = dto.thumbnailUrl,
             contents = dto.contents?.map { it.fromDto() },
             mediaIds = dto.mediaIds?.map { it.fromDto() },
         )
@@ -200,6 +201,7 @@ class PostService(
             userId = actorId,
             title = postDocument.title,
             contents = postDocument.contents?.map { it.toDto() },
+            thumbnailUrl = postDocument.thumbnailUrl,
             mediaIds = postDocument.mediaIds?.map { it.toDto() },
             visible = postDocument.visible,
             createdAt = postDocument.createdAt!!,

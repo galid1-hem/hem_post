@@ -15,6 +15,7 @@ class PostDocument(
     var regionId: Long,
     var title: String,
     var contents: List<Decorator>? = null,
+    var thumbnailUrl: String? = null,
     var mediaIds: List<MediaId>? = null,
     var visible: Boolean = true,
     var deletedAt: LocalDateTime? = null,

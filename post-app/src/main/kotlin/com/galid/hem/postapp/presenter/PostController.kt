@@ -14,8 +14,10 @@ class PostController(
     fun createPost(
         //        clientContext: ClientContext,
         @RequestBody request: PostDto.Request
-    ) {
-        return postService.createPost(request, 1)
+    ): Response<PostDto.Response> {
+        return Response(
+            data = postService.createPost(request, 1)
+        )
     }
 
     @GetMapping
@@ -24,11 +26,13 @@ class PostController(
         @RequestParam("lastPostId") lastPostId: String?,
         @RequestParam("size") size: Int?,
     ): Response<List<PostDto.Response>> {
-        return Response(data = postService.getPosts(
-            actorId = 1,
-            lastPostId = lastPostId,
-            size = size,
-        ))
+        return Response(
+            data = postService.getPosts(
+                actorId = 1,
+                lastPostId = lastPostId,
+                size = size,
+            )
+        )
     }
 
     @GetMapping("/actors/{actorId}")
@@ -37,21 +41,25 @@ class PostController(
         @RequestParam("lastPostId") lastPostId: String?,
         @RequestParam("size") size: Int?,
     ): Response<List<PostDto.Response>> {
-        return Response(data = postService.getPostsByActorId(
-            actorId = 1,
-            lastPostId = lastPostId,
-            size = size
-        ))
+        return Response(
+            data = postService.getPostsByActorId(
+                actorId = 1,
+                lastPostId = lastPostId,
+                size = size
+            )
+        )
     }
 
     @GetMapping("/{postId}")
     fun getPost(
         //        clientContext: ClientContext,
         @PathVariable("postId") postId: String
-    ): PostDto.Response {
-        return postService.getPost(
-            postId = postId,
-            actorId = 1
+    ): Response<PostDto.Response> {
+        return Response(
+            data = postService.getPost(
+                postId = postId,
+                actorId = 1
+            )
         )
     }
 
@@ -60,15 +68,19 @@ class PostController(
         //        clientContext: ClientContext,
         @PathVariable("postId") postId: String,
         @RequestBody request: PostDto.Request,
-    ) {
-        return postService.updatePost(postId, request)
+    ): Response<Any> {
+        return Response(
+            data = postService.updatePost(postId, request)
+        )
     }
 
     @DeleteMapping("/{postId}")
     fun deletePost(
         //        clientContext: ClientContext,
         @PathVariable("postId") postId: String,
-    ) {
-        return postService.deletePost(postId)
+    ): Response<Any> {
+        return Response(
+            data = postService.deletePost(postId)
+        )
     }
 }

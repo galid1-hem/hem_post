@@ -5,13 +5,13 @@ import com.galid.hem.postapp.service.LikeService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/v1/posts/{post_id}/likes")
+@RequestMapping("/api/v1/posts/{postId}/likes")
 class LikeController(
     private val likeService: LikeService
 ) {
     @PostMapping
     fun createLike(
-        @PathVariable("post_id") postId: String
+        @PathVariable("postId") postId: String
     ): Response<Any> {
         return Response(
             data = likeService.createLike(
@@ -22,10 +22,10 @@ class LikeController(
         )
     }
 
-    @DeleteMapping("/{like_id}")
+    @DeleteMapping("/{likeId}")
     fun deleteLike(
-        @PathVariable("post_id") postId: String,
-        @PathVariable("like_id") likeId: String,
+        @PathVariable("postId") postId: String,
+        @PathVariable("likeId") likeId: String,
     ): Response<Any> {
         likeService.deleteLike(
             postId = postId,

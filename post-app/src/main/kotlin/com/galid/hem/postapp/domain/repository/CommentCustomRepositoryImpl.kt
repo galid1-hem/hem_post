@@ -21,7 +21,6 @@ class CommentCustomRepositoryImpl(
     ): List<CommentDocument> {
         val criteria = Criteria("post_id").`is`(postId).and("parent_comment_id").`is`(parentCommentId)
 
-
         if (lastCommentId != null) {
             if (sortDirection == Sort.Direction.ASC) {
                 criteria.and("_id").gt(lastCommentId)

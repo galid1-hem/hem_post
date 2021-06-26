@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "contents": [
     {
-      "value": "5 댓글",
+      "value": "2 댓글",
       "type": "TEXT"
     }
   ]

@@ -7,6 +7,7 @@ class PostDto {
         val regionId: Long,
         val title: String,
         val contents: List<DecoratorDto>? = null,
+        val thumbnailUrl: String? = null,
         val mediaIds: List<MediaIdDto>? = null
     )
 
@@ -16,6 +17,7 @@ class PostDto {
         val regionId: Long,
         val title: String,
         val contents: List<DecoratorDto>? = null,
+        val thumbnailUrl: String? = null,
         val mediaIds: List<MediaIdDto>? = null,
         val postCounter: PostCounterDto.Response? = null,
         val viewerLike: LikeDto.Response? = null,
