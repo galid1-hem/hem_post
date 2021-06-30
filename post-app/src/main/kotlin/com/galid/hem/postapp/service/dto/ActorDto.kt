@@ -5,5 +5,5 @@ import com.galid.hem.postapp.domain.model.Actor
 data class ActorDto(
     val actorId: Long,
     val profileImageUrl: String? = null,
-    val relationType: Actor.RelationType
+    val relationType: Actor.RelationType = Actor.RelationType.ME
 )

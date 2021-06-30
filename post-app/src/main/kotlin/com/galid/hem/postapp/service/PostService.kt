@@ -2,13 +2,13 @@ package com.galid.hem.postapp.service
 
 import com.galid.hem.postapp.common.const.DEFAULT_FETCH_POST_SIZE
 import com.galid.hem.postapp.common.extension.fromDto
+import com.galid.hem.postapp.common.extension.makeActor
 import com.galid.hem.postapp.common.extension.toDto
 import com.galid.hem.postapp.common.extension.toObjectId
 import com.galid.hem.postapp.domain.document.ActorPostDocument
 import com.galid.hem.postapp.domain.document.PostCounterDocument
 import com.galid.hem.postapp.domain.document.PostDocument
-import com.galid.hem.postapp.domain.model.Decorator
-import com.galid.hem.postapp.domain.model.MediaId
+import com.galid.hem.postapp.domain.model.Actor
 import com.galid.hem.postapp.domain.repository.ActorPostRepository
 import com.galid.hem.postapp.domain.repository.PostCounterRepository
 import com.galid.hem.postapp.domain.repository.PostRepository
@@ -150,6 +150,9 @@ class PostService(
                     )
             }.toMap()
 
+        //        val actor = actorService.findById(actorId)
+        val actor = ActorDto(actorId)
+
         val viewerLikeMap = likeService.getLikeListForPostList(postIdList, actorId)
             .map { it.postId to it }
             .toMap()
@@ -157,7 +160,7 @@ class PostService(
         return posts.map {
             toResponse(
                 postDocument = it,
-                actorId = actorId,
+                actor = actor,
                 postCounter = postCounterMap[it.id],
                 viewerLike = viewerLikeMap[it.id.toString()]
             )
@@ -178,11 +181,14 @@ class PostService(
                 )
             }
 
+//        val actor = actorService.findById(actorId)
+        val actor = ActorDto(actorId)
+
         val viewerLike = likeService.getLikeForPost(post.id!!, actorId)
 
         return toResponse(
             postDocument = post,
-            actorId = actorId,
+            actor = actor,
             postCounter = postCounter,
             viewerLike = viewerLike
         )
@@ -190,14 +196,14 @@ class PostService(
 
     internal fun toResponse(
         postDocument: PostDocument,
-        actorId: Long,
+        actor: ActorDto,
         postCounter: PostCounterDto.Response?,
         viewerLike: LikeDto.Response?,
     ): PostDto.Response {
         return PostDto.Response(
             postId = postDocument.id.toString(),
             regionId = postDocument.regionId,
-            userId = actorId,
+            actor = actor,
             title = postDocument.title,
             contents = postDocument.contents?.map { it.toDto() },
             mediaIds = postDocument.mediaIds?.map { it.toDto() },

@@ -12,7 +12,7 @@ class PostDto {
 
     data class Response(
         val postId: String,
-        val userId: Long,
+        val actor: ActorDto,
         val regionId: Long,
         val title: String,
         val contents: List<DecoratorDto>? = null,
