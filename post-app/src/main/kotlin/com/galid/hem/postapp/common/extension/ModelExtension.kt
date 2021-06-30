@@ -7,7 +7,7 @@ import com.galid.hem.postapp.service.dto.ActorDto
 import com.galid.hem.postapp.service.dto.DecoratorDto
 import com.galid.hem.postapp.service.dto.MediaIdDto
 
-fun MediaId.toDto(): MediaIdDto = MediaIdDto(this.id, this.type)
+fun MediaId.toDto(): MediaIdDto = MediaIdDto(this.id, this.type, this.imageUrl)
 
 fun Decorator.toDto(): DecoratorDto = DecoratorDto(this.value, this.type)
 
